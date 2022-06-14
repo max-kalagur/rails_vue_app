@@ -16,7 +16,7 @@
             }
         },
         methods: {
-            async calculateFees() {
+            calculateFees() {
                 this.paymentOptions = this.paymentOptions.filter(payment => payment.currencies.includes(this.currency));
                 if( this.paymentOptions.length == 0 ) {
                     throw new TypeError("Bad currency");
@@ -32,7 +32,7 @@
             const res = await this.backendApi.getPaymentOptions();
             this.currencies = res.currencies;
             this.paymentOptions = res.payment_options;
-            await this.calculateFees();
+            this.calculateFees();
         },
     }
 </script>
