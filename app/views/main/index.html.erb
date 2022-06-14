@@ -21,7 +21,7 @@
                     <%= f.label :currency, "Currency:", class: "col-sm-4 col-form-label" %>
                         <div class="col-sm-8">
 
-                        <%= f.select :currency, @currencies, {}, {class: "form-select"} %>
+                        <%= f.select :currency, @currencies, {}, {class: "form-select", :selected => @currencies[0]}  %>
 
                         </div>
                     </div>

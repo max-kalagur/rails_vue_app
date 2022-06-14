@@ -6,9 +6,13 @@ if ( document.body.contains(invoiceForm) ) {
     const formPrice = sessionStorage.getItem('checkout_price'),
         formCurrency = sessionStorage.getItem('checkout_currency');
 
-    invoiceForm.price.value = formPrice;
-    invoiceForm.currency.value = formCurrency;
-
+    if( formPrice ) {
+        invoiceForm.price.value = formPrice;
+    }
+    if( formCurrency ) {
+        invoiceForm.currency.value = formCurrency;
+    }
+    
     invoiceForm.addEventListener('submit', (e) => {
         e.preventDefault();
         sessionStorage.setItem('checkout_price', e.target.price.value);
