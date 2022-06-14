@@ -20,5 +20,6 @@ RUN yarn install
 
 # Start server
 CMD rails server -b 0.0.0.0
+# CMD bin/dev
 
 EXPOSE 3000

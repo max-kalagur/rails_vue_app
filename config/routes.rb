@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
+  get 'invoice', to: 'main#invoice'
+  get 'payment-options', to: 'main#get_payment_options', :defaults => { :format => 'json' }
+  
+  root "main#index"
 end

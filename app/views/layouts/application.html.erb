@@ -8,9 +8,34 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+    
+    <% if(current_page?(root_path)) %>
+      <%= javascript_include_tag 'invoice_form', "data-turbo-track": "reload", defer: true %>
+    <% end %>
   </head>
 
   <body>
-    <%= yield %>
+    
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <div class="container-fluid">
+        <a class="navbar-brand" href="/"><i class="bi bi-bag-heart"></i></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+            <%= link_to "Main", root_path, class: class_names('nav-link', { active: current_page?(root_path) })  %>
+            <%= link_to "Invoice", invoice_path, class: class_names('nav-link', { active: current_page?(invoice_path) })  %>
+            </div>
+        </div>
+        </div>
+    </nav>
+
+
+    <div class="container">
+
+        <%= yield %>
+          
+    </div>
   </body>
 </html>

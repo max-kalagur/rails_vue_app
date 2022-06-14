@@ -20,3 +20,9 @@ module TestApp
     # config.eager_load_paths << Rails.root.join("extras")
   end
 end
+
+module MyApp
+  class Application < Rails::Application
+    config.payment_options = config_for(:payment_options)
+  end
+end

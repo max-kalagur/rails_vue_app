@@ -1,0 +1,24 @@
+default: &default
+  currencies: ['USD','EUR','JPY','INR']
+  payment_options:
+  - name: PayPal
+    fee: 20
+    currencies: ['USD','EUR','JPY']
+  - name: Card
+    fee: 10
+    currencies: ['USD','EUR','JPY','INR']
+  - name: ACH
+    fee: 5
+    currencies: ['USD']
+  - name: Crypto
+    fee: 1
+    currencies: ['USD','INR']
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default

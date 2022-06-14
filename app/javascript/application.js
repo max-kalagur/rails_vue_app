@@ -2,3 +2,6 @@
 // import "@hotwired/turbo-rails"
 // import "./controllers"
 import * as bootstrap from "bootstrap"
+import { checkout } from "./apps/checkout/app"
+
+checkout.run()
