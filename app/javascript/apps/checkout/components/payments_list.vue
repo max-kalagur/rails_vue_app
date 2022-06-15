@@ -39,6 +39,11 @@
 
 <template>
     
+    <div class="loading" v-if="paymentOptions.length == 0">
+        <div class="spinner-grow text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
     <div class="payment-btns btn-group-vertical" v-if="!chosenPaymentOption">
         <button v-for='paymentOption in paymentOptions' 
             type="button" 
