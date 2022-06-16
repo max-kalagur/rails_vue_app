@@ -6,6 +6,10 @@ class MainController < ApplicationController
   def invoice
   end
 
+  def get_invoice_data
+    render json: { price: 276, currency: 'USD' }, status: :ok
+  end
+
   def get_payment_options
     options = Rails.configuration.payment_options
 

@@ -9,8 +9,13 @@ class BackendApi {
     }
 
     async getPaymentOptions() {
-        const paymentOptionsRes = await axios.get(`/payment-options.json`)
-        return paymentOptionsRes.data;
+        const res = await axios.get(`/payment-options.json`)
+        return res.data;
+    }
+
+    async getInvoiceData() {
+        const res = await axios.get(`/invoice-data.json`)
+        return res.data;
     }
 
 

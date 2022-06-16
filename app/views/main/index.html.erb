@@ -1,7 +1,7 @@
 
 <h1 class="mb-4">Main Page</h1>
 
-<div class="row">
+<div class="row mb-4">
     <div class="col-lg-3">
         <div class="card">
             <div class="card-header">
@@ -9,23 +9,22 @@
             </div>
             <div class="card-body">
 
-                <%= form_with url: invoice_path, id: "invoice-form", method: :get do |f| %>
+                <%= form_with id: "invoice-form", method: :get do |f| %>
 
                     <div class="mb-3 row">
                         <%= f.label :price, "Price:", class: "col-sm-4 col-form-label" %>
                         <div class="col-sm-8">
-                            <%= f.number_field :price, class: "form-control", placeholder: "100" %>
+                            <%= f.number_field :price, min: ".00", step: ".01", class: "form-control", placeholder: "100" %>
                         </div>
                     </div>
                     <div class="mb-3 row">
                     <%= f.label :currency, "Currency:", class: "col-sm-4 col-form-label" %>
                         <div class="col-sm-8">
 
-                        <%= f.select :currency, @currencies, {}, {class: "form-select", :selected => @currencies[0]}  %>
+                        <%= f.select :currency, @currencies, {:selected => @currencies[0]}, {class: "form-select"}  %>
 
                         </div>
                     </div>
-                    <%= f.submit "Submit", class: "btn btn-primary" %>
                 <% end %>
 
             </div>
@@ -33,3 +32,7 @@
     </div>
 </div>
 
+<div class="row">
+    <div id="checkout-widget">
+    </div>
+</div>

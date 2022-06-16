@@ -1,15 +1,14 @@
 import { createApp } from 'vue/dist/vue.esm-bundler.js'
 import PaymentsList from './components/payments_list.vue'
+import { BackendApi } from './api/backend'
 
 class checkout {
 
     static run()  {
 
-        const invocePrice = sessionStorage.getItem('checkout_price'),
-            invoiceCurrency = sessionStorage.getItem('checkout_currency'),
-            checkoutWidget = document.getElementById('checkout-widget');
+        const checkoutWidget = document.getElementById('checkout-widget');
 
-        if (document.body.contains(checkoutWidget) && invocePrice && invoiceCurrency) {
+        if (document.body.contains(checkoutWidget)) {
 
             document.addEventListener('DOMContentLoaded', () => {
                 const app = createApp({
@@ -18,15 +17,47 @@ class checkout {
                     },
                     data() {
                         return {
-                            price: invocePrice,
-                            currency: invoiceCurrency,
+                            price: null,
+                            currency: null,
+                        }
+                    },
+                    methods: {
+                        mainPageInit() {
+                            this.price = localStorage.getItem('checkout_price');
+                            this.currency = localStorage.getItem('checkout_currency');
+                            // track price & currency changes
+                            window.addEventListener('storage', (event) => {
+                                if( ['checkout_price','checkout_currency'].includes(event.key) ) {
+                                    let key = event.key.replace('checkout_','');
+                                    this[key] = event.newValue;
+                                }
+                            });
+                        },
+                        async invoicePageInit() {
+                            this.backendApi = new BackendApi;
+                            const res = await this.backendApi.getInvoiceData();
+                            this.price = res.price;
+                            this.currency = res.currency;
                         }
                     },
                     template: `
-                        <PaymentsList 
+                        <PaymentsList v-if="price && currency"
                             :price="price"
                             :currency="currency" />
-                    `
+                        <div v-else>Please fill invoice form on the <a href="/">Main page</a></div>
+                    `,
+                    async created() {
+
+                        // Main Page with localStorage data
+                        if( window.location.pathname === '/' ) {
+                            this.mainPageInit();
+                        }
+                        // Invoice Page with Backend data
+                        else {
+                            await this.invoicePageInit();
+                        }
+
+                    },
                 });
                 app.config.errorHandler = (err, instance, info) => {
                     checkoutWidget.innerHTML = 'Something went wrong. Please try again.';
@@ -35,9 +66,6 @@ class checkout {
 
                 const rootComponent = app.mount('#checkout-widget');
             });
-        }
-        else if( document.body.contains(checkoutWidget) ) {
-            checkoutWidget.innerHTML = 'Please fill and submit invoice form first on the <a href="/">Main page</a>';
         }
 
     }
