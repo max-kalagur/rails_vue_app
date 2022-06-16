@@ -1,3 +1,4 @@
+import { CurrencyFormat } from "./lib/currency_format"
 
 const invoiceForm = document.getElementById('invoice-form');
 
@@ -7,13 +8,21 @@ if ( document.body.contains(invoiceForm) ) {
         formCurrency = localStorage.getItem('checkout_currency') ?? invoiceForm.currency.value;
 
     // Save invoice data handler
-    const saveInvoiceData = (sessionKey, value) => {
-        !!value ? localStorage.setItem(sessionKey, value) : localStorage.removeItem(sessionKey);
-        // to inform current tab
-        window.dispatchEvent(new StorageEvent('storage', {
-            key: sessionKey, 
-            newValue: value
-        }));    
+    const saveInvoiceData = (inputKey, value) => {
+        
+        if( inputKey == 'checkout_price' ) { value = CurrencyFormat.format(value); }
+
+        if( !!value ) {
+            localStorage.setItem(inputKey, value)
+            // to inform current tab
+            window.dispatchEvent(new StorageEvent('storage', {
+                key: inputKey, 
+                newValue: value
+            }));
+        }
+        else {
+            localStorage.removeItem(inputKey);
+        }
     };
 
     // Update Form if we have data in localStorage

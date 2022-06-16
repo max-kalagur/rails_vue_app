@@ -29,6 +29,9 @@ class checkout {
                             window.addEventListener('storage', (event) => {
                                 if( ['checkout_price','checkout_currency'].includes(event.key) ) {
                                     let key = event.key.replace('checkout_','');
+                                    console.log(key);
+                                    console.log(event.newValue);
+                                    console.log(!!event.newValue);
                                     this[key] = event.newValue;
                                 }
                             });
